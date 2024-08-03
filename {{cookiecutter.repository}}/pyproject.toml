@@ -1,15 +1,19 @@
 [tool.poetry]
-name = "mlops template"
-version = "1.0.0"
-description = "MLOps template to deploy ML applications to production"
-authors = ["Matheus Ribeiro <94936606+mathewsrc@users.noreply.github.com>"]
-license = "MIT"
+name = "{{cookiecutter.repository}}"
+version = "{{cookiecutter.version}}"
+description = "{{cookiecutter.description}}"
+repository = "https://github.com/{{cookiecutter.user}}/{{cookiecutter.repository}}"
+documentation = "https://{{cookiecutter.user}}.github.io/{{cookiecutter.repository}}/"
+authors = ["{{cookiecutter.user}}"]
 readme = "README.md"
-package-mode = false
-repository = "https://github.com/mathewsrc/mlops-template-base"
+license = "{{cookiecutter.license}}"
+packages = [{ include = "{{cookiecutter.package}}", from = "src" }]
+
+[tool.poetry.scripts]
+{{cookiecutter.repository}} = "{{cookiecutter.package}}.scripts:main"
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = "^{{cookiecutter.python_version}}"
 polars = "^1.4.0"
 ruff = "^0.5.6"
 pre-commit = "^3.8.0"
@@ -20,6 +24,42 @@ uvicorn = "^0.30.5"
 pydantic = "^2.8.2"
 invoke = "^2.2.0"
 pytest-shell-utilities = "^1.9.0"
+
+# CONFIGURATIONS
+
+[tool.bandit]
+targets = ["src"]
+
+[tool.coverage.run]
+branch = true
+source = ["src"]
+omit = ["__main__.py"]
+
+[tool.mypy]
+pretty = true
+strict = true
+python_version = "{{cookiecutter.python_version}}"
+check_untyped_defs = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+addopts = "--verbosity=2"
+pythonpath = ["src"]
+
+[tool.ruff]
+fix = true
+indent-width = 4
+line-length = 100
+target-version = "py{{cookiecutter.python_version.replace('.', '')}}"
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*.py" = ["D100", "D103"]
 
 [tool.ruff]
 line-length = 100
