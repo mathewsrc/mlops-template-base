@@ -32,7 +32,7 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                python-version: [{{cookiecutter.python_version}}]
+                python-version: ["{{cookiecutter.python_version}}"]
         steps:
         - name: Checkout
           uses: actions/checkout@v4
