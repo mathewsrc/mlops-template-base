@@ -6,7 +6,7 @@ on:
       - published
 env:
   DOCKER_IMAGE: ghcr.io/{{cookiecutter.user}}/{{cookiecutter.repository}}
-  TAG: ${{ github.sha }}
+  TAG: {% raw %}${{ github.sha }}{% endraw %}
 concurrency:
   cancel-in-progress: true
   group: publish-workflow
@@ -45,4 +45,4 @@ jobs:
           cache-from: type=gha
           tags: |
             {% raw %}${{ env.DOCKER_IMAGE }}:latest{% endraw %}
-            {% raw %}${{ env.DOCKER_IMAGE }}:${{ env.TAG }}{% endraw %}
+            {% raw %}${{ env.DOCKER_IMAGE }}:${{ env.TAG }}
