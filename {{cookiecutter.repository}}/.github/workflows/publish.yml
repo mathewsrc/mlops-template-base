@@ -45,4 +45,4 @@ jobs:
           cache-from: type=gha
           tags: |
             {% raw %}${{ env.DOCKER_IMAGE }}:latest{% endraw %}
-            {% raw %}${{ env.DOCKER_IMAGE }}:${{ env.TAG }}
+            {% raw %}${{ env.DOCKER_IMAGE }}:${{ env.TAG }}{% endraw %}
