@@ -7,7 +7,6 @@
     "version": "0.1.0",
     "description": "TODO",
     "python_version": "3.12",
-    "use_mlflow": "n",
     "__prompts__": {
         "user": "GitHub User",
         "name": "Project Name",
@@ -16,7 +15,6 @@
         "license": "Project License",
         "version": "Project Version",
         "description": "Project Description",
-        "python_version": "Python Version",
-        "use_mlflow": "Use MLflow"
+        "python_version": "Python Version"
     }
 }
