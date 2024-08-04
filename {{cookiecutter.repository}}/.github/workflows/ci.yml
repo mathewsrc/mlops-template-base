@@ -1,0 +1,77 @@
+name: Test
+on:
+    push:
+        branches:
+            - main
+        paths-ignore:
+            - 'README.md'
+            - '.gitingore'
+    pull_request:
+        branches:
+            - main
+        paths-ignore:
+            - 'README.md'
+            - '.gitingore'
+
+inputs:
+    use-cache:
+        description: "Use cache for dependencies"
+        required: false
+        default: "true"
+
+permissions:
+    contents: read
+    id-token: write
+
+concurrency:
+    group: {% raw %}${{ github.workflow }}-${{ github.ref }}{% endraw %}
+    cancel-in-progress: true
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                python-version: [{{cookiecutter.python_version}}]
+        steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+        
+        - name: Setup Python
+          uses: actions/setup-python@v4
+          with:
+            python-version: {% raw %}${{ matrix.python-version }}{% endraw %}
+        
+        - name: Setup a local virtual environment (if no poetry.toml file)
+          run: |
+            poetry config virtualenvs.create true --local
+            poetry config virtualenvs.in-project true --local
+        
+        - name: Define a cache for the virtual environment 
+          id: cached-poetry-dependencies  
+          if: inpust.use-cache == 'true' 
+          uses: actions/cache@v4
+          with:
+            path: ./.venv
+            key: {% raw %}venv-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}{% endraw %}
+        
+        - name: Install poetry
+          if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+          run: |
+            pipx install poetry
+            poetry install
+    
+        - name: Run tests
+          run: poetry run pytest --html=report.html --self-contained-html --cov=tests --cov-report=html
+        
+        - name: Upload pytest report
+          uses: actions/upload-artifact@v3
+          with:
+            name: pytest-report
+            path: tests_report.html
+        
+        - name: Upload coverage report
+          uses: actions/upload-artifact@v3
+          with:
+            name: coverage-report
+            path: htmlcov/
