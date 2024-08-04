@@ -10,6 +10,7 @@ from . import (
     docs,
     formats,
     installs,
+    mlflows
 )
 
 # %% NAMESPACES
@@ -24,3 +25,4 @@ ns.add_collection(containers)
 ns.add_collection(docs)
 ns.add_collection(formats)
 ns.add_collection(installs)
+ns.add_collection(mlflows)
