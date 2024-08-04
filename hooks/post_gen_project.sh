@@ -1,3 +1,5 @@
+#!bin/bash
+
 # Install Poetry
 chmod +x install_poetry.sh
 ./install_poetry.sh
