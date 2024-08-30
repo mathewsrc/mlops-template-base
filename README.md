@@ -14,6 +14,12 @@ cd {{ cookiecutter.repository }}
 git init
 ```
 
+### For codespaces copy .git to {{ cookicutter.repository }}
+```
+mv .git {{ cookiecutter.repository }}
+cd {{ cookiecutter.repository }}
+```
+
 ### Finally enable GitHub Pages Workflow:
 - Navigate to your repository settings on GitHub: "Settings" -> "Actions" -> "General."
 - Under "Workflow permissions," ensure "Read and write permissions" is selected.
