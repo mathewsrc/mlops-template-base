@@ -24,7 +24,7 @@ bandit = "^1.7.9"
 coverage = "^7.5.4"
 mypy = "^1.10.1"
 pytest-xdist = "^3.6.1"
-pdoc = ^14.5.1"
+pdoc = "^14.5.1"
 ipykernel = "^6.29.4"
 nbformat = "^5.10.4"
 
@@ -55,17 +55,11 @@ indent-width = 4
 line-length = 100
 target-version = "py{{cookiecutter.python_version.replace('.', '')}}"
 
-[tool.ruff.format]
-docstring-code-format = true
-
 [tool.ruff.lint.pydocstyle]
 convention = "google"
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*.py" = ["D100", "D103"]
-
-[tool.ruff]
-line-length = 100
 
 [tool.ruff.lint]
 # 2. Avoid enforcing line-length violations (`E501`)
